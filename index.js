@@ -6,24 +6,6 @@ const rl = readline.createInterface({
     output: process.stdout,
 });
 
-// const jokeGenerator = () => {
-//     const req = https.request("https://api.chucknorris.io/jokes/random",
-//     function (res) {
-//         let data = '';
-//         res.on("data", function (chunk) {
-//             data += chunk;
-//         });
-//         res.on("end", function () {
-//             console.log(JSON.parse(data).value);
-//         });
-//     });
-
-//     req.on("error", function (error) {
-//         console.error("Error making request:", error);
-//     });
-
-//     req.end();
-// }
 
 function generateRandomNumber(min, max) {
     // Generate a random number between min (inclusive) and max (exclusive)
@@ -39,7 +21,10 @@ const jokeCategories = () => {
             data += chunk;
         });
         res.on("end", function () {
-            console.log(JSON.parse(data));
+            for(let i = 0; i < JSON.parse(data).length; i++){
+                console.log(`${i + 1}. ${JSON.parse(data)[i]}`);
+            }
+            ;
         });
     });
 
@@ -78,10 +63,10 @@ rl.question("What is your name? ", function(name){
         "Hi, " + name + ", do you want to hear some jokes? [Y/N] ",
         function (answer) {
             if(answer === "Y"){
-                rl.question("Select one of the categories below: ", function(caterogy){
+                jokeCategories()
+                rl.question("Select one of the categories below:\n ", function(caterogy){
                     jokeCategoryRequest(caterogy);
-                });
-                jokeCategories();
+                })
                 
             } else {
                 console.log("Get the hell out of here!");
